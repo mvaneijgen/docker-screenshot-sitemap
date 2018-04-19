@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  puppeteer:
+    build: .
+    environment:
+    - SITEMAP=http://alloy.work/naturbyn/sitemap_index.xml
+    volumes:
+    # mount code and output directories into the container
+      - ./output:/app/output
+      - ./code:/app/code
+    working_dir: /app/code
+    shm_size: 1gb #512M
+    # just run the container doing nothing
+    # entrypoint: ["sh", "-c", "sleep infinity"]
+    # command: "node main.js"
+    command: >
+     bash -c "yarn install &&
+     node index.js ${SITEMAP}"
