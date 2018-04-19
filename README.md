@@ -8,10 +8,12 @@ A dockerized [Puppeteer](https://github.com/GoogleChrome/puppeteer) development 
 
 Make sure you have Docker and docker-compose installed and configured so your current user can use both (default with macOS installation).
 
-Build and run the container:
+Build and run the container it will also start generating screenshot:
 
 ```
-$ SITEMAP=http://domain.com/link/to/sitemap.xml docker-compose up
+SITEMAP=http://domain.com/link/to/sitemap.xml docker-compose up
 ```
 
 Your images will appear in the `/output/` folder
+
+If there is no `SITEMAP` variable being passed it will use the default value in the `docker-compose.yml` file
