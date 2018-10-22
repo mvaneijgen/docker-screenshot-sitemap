@@ -29,7 +29,9 @@ const sitemap = new Sitemapper();
 const argv = minimist(process.argv.slice(2));
 
 //Help logic
-if (argv._.length !== 1) { printHelp(); }
+if (argv._.length !== 1) {
+  printHelp();
+}
 
 function printHelp() {
   console.log(`Usage: node sitemapper.js [sitemap url]`);
@@ -39,10 +41,13 @@ function printHelp() {
 // Converts sitemap (multiple levels) to a plain list
 // const sitemapUrl = 'http://alloy.work/naturbyn/sitemap_index.xml';
 const sitemapUrl = argv._[0];
-(async() => {
+(async () => {
 
   // Fetch sitemap
-  let { url, sites } = await sitemap.fetch(sitemapUrl);
+  let {
+    url,
+    sites
+  } = await sitemap.fetch(sitemapUrl);
 
   for (let url of sites) {
     urls.push(url);
@@ -67,7 +72,7 @@ function startGenerating() {
 
   (async () => {
     let screenshotDirectory = '/app/output/';
-    if (!fs.existsSync(screenshotDirectory)){
+    if (!fs.existsSync(screenshotDirectory)) {
       fs.mkdirSync(screenshotDirectory);
     }
 
@@ -93,7 +98,7 @@ function startGenerating() {
       await page.setUserAgent(device.userAgent)
 
       let deviceDirectory = screenshotDirectory + device.deviceName + '/';
-      if (!fs.existsSync(deviceDirectory)){
+      if (!fs.existsSync(deviceDirectory)) {
         fs.mkdirSync(deviceDirectory);
       }
 
@@ -116,9 +121,30 @@ function startGenerating() {
         let imageName = device.width + '-' + convertURL + '.jpg';
 
         // Load page and create full page screenshot
-        await page.goto(url, {waitUntil: 'networkidle2'});
-        await page.screenshot({path: deviceDirectory + imageName, fullPage: true});
-
+        await page.goto(url, {
+          waitUntil: 'networkidle2'
+        });
+        //------------------------------------------------------//
+        // View Height (vw) fix
+        //------------------------------------------------------//
+        const bodyHandle = await page.$('body');
+        const {
+          width,
+          height
+        } = await bodyHandle.boundingBox();
+        await page.screenshot({
+          path: deviceDirectory + imageName,
+          // fullPage: true,
+          clip: {
+            x: 0,
+            y: 0,
+            width,
+            height
+          },
+        });
+        //------------------------------------------------------//
+        // END View Height (vw) fix
+        //------------------------------------------------------//
       }
     }
     console.log('✅  Should have generated ' + urls.length * devices.length + 'images.');
