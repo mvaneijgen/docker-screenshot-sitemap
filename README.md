@@ -10,7 +10,7 @@ Make sure you have Docker and docker-compose installed and configured so your cu
 
 Build and run the container it will also start generating screenshots:
 
-Be sure to run the following command from the project root eg `cd `~/YOUR-USER/docker-screenshot-sitemap`
+Be sure to run the following command from the project root eg `cd ~/YOUR-USER/docker-screenshot-sitemap`
 
 ```
 SITEMAP=http://domain.com/link/to/sitemap.xml docker-compose up
