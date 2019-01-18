@@ -13,7 +13,7 @@ Build and run the container it will also start generating screenshots:
 Be sure to run the following command from the project root eg `cd ~/YOUR-USER/docker-screenshot-sitemap`
 
 ```
-SITEMAP=http://domain.com/link/to/sitemap.xml docker-compose up
+SITEMAP=http://domain.com/link/to/sitemap_index.xml docker-compose up
 ```
 
 Your images will appear in the `/output/` folder in the root of the project eg `/docker-screenshot-sitemap/output/`
